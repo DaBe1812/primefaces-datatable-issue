@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="jakarta.faces.facelets"
       xmlns:f="jakarta.faces.core"
       xmlns:h="jakarta.faces.html"
       xmlns:p="primefaces">
@@ -13,8 +12,44 @@
     <h:body>
 
         <h1>#{testView.string}</h1>
-        <h:form id="frmTest">
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true"/>
+            <p:dataTable var="album" value="#{testView.list}" editable="true">
+                <p:ajax event="rowEdit" listener="#{testView.onRowEdit}" update=":form:msgs"/>
+                <p:ajax event="rowEditCancel" listener="#{testView.onRowCancel}" update=":form:msgs"/>
 
+                <p:headerRow field="artist" expandable="true" expanded="false">
+
+                    <p:column colspan="4">
+                        <div class="inline-flex align-items-center" style="vertical-align: middle">
+                            <h:outputText styleClass="ml-2" value="#{album.artist}"/>
+                        </div>
+                    </p:column>
+                </p:headerRow>
+
+                <p:column headerText="Album">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{album.name}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText id="modelInput" value="#{album.name}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Artist">
+                    <h:outputText value="#{album.artist}" />
+                </p:column>
+
+                <p:column headerText="Year">
+                    <h:outputText value="#{album.released}" />
+                </p:column>
+
+                <p:column style="width:6rem">
+                    <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+                </p:column>
+            </p:dataTable>
         </h:form>
 
     </h:body>
