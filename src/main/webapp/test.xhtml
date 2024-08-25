@@ -19,11 +19,8 @@
                 <p:ajax event="rowEditCancel" listener="#{testView.onRowCancel}" update=":form:msgs"/>
 
                 <p:headerRow field="artist" expandable="true" expanded="false">
-
                     <p:column colspan="4">
-                        <div class="inline-flex align-items-center" style="vertical-align: middle">
-                            <h:outputText styleClass="ml-2" value="#{album.artist}"/>
-                        </div>
+                        <h:outputText styleClass="ml-2" value="#{album.artist}"/>
                     </p:column>
                 </p:headerRow>
 
